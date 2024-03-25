@@ -1,8 +1,20 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { AppProvider } from "@/Context/AppContext";
+import { Header } from "@/components/Header";
+//farcaster auth kit
+import "@farcaster/auth-kit/styles.css";
+import { AuthKitProvider } from "@farcaster/auth-kit";
+import { SignInButton } from "@farcaster/auth-kit";
 
 const inter = Inter({ subsets: ["latin"] });
+
+const config = {
+  rpcUrl: "https://mainnet.optimism.io",
+  domain: "http://localhost:3000/",
+  siweUri: "https://example.com/login",
+};
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +28,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <AppProvider>
+        <body className={inter.className}>
+          <Header />
+          {children}
+        </body>
+      </AppProvider>
     </html>
   );
 }
